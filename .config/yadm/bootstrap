@@ -6,6 +6,25 @@
 
 set -eu
 
+######################
+# Setting YADM stuff
+######################
+function yadm_getrel () {
+    yadm_root=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+    echo $1 | sed -e "s|^${yadm_root}/||" -e 's|.*/\([^/]*/[^/]*\)$|\1|'
+}
+export -f yadm_getrel
+
+function yadm_startscript () {
+    echo "script-start: $(yadm_getrel $0)"
+}
+export -f yadm_startscript
+
+function yadm_endscript () {
+    echo "script-end: $(yadm_getrel $0)"
+}
+export -f yadm_endscript
+
 # Directory to look for bootstrap executables in
 BOOTSTRAP_D="${BASH_SOURCE[0]}.d"
 
